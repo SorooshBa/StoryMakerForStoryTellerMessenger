@@ -6,11 +6,31 @@
         xmlns:local="clr-namespace:StoryMaker"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200">
-    <Grid>
-        <ScrollViewer x:Name="scrl" MouseMove="scrl_MouseMove" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Margin="10,0,0,0">
-            <Grid MouseRightButtonDown="createNewDialogue" Background="#FF595959" x:Name="gridMain" Width="7000" Height="7000" Margin="0,0,-563,-335">
+    <TabControl>
+        <TabItem Header="Dialog Designer">
+            <Grid>
+                <ScrollViewer x:Name="scrl" MouseMove="scrl_MouseMove" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Margin="10,0,0,0">
+                    <Grid MouseRightButtonDown="createNewDialogue" Background="#FF595959" x:Name="gridMain" Width="7000" Height="7000" Margin="0,0,-563,-335">
+
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
+        <TabItem Header="User">
+            <Grid Background="#7289da">
+                <ScrollViewer Margin="32,34,627,41">
+                    <StackPanel x:Name="stckUser" Background="#1e2124">
+
+                    </StackPanel>
+                </ScrollViewer>
+                <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="598,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="358" Height="24"/>
+                <Label Content="Name:" HorizontalAlignment="Left" Margin="598,49,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="imgAddr" IsEnabled="False" HorizontalAlignment="Left" Margin="598,167,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="313" Height="24"/>
+                <Label Content="Image" HorizontalAlignment="Left" Margin="598,128,0,0" VerticalAlignment="Top"/>
+                <Button Content="..." HorizontalAlignment="Left" Margin="916,167,0,0" VerticalAlignment="Top" Height="24" Width="40" Click="ChooseImage_Click"/>
+                <Button Click="AddUser_clicked" Content="Add" HorizontalAlignment="Left" Margin="856,239,0,0" VerticalAlignment="Top" Height="37" Width="100"/>
 
             </Grid>
-        </ScrollViewer>
-    </Grid>
+        </TabItem>
+    </TabControl>
 </Window>

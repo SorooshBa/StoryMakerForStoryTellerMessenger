@@ -29,6 +29,19 @@ namespace StoryMaker
         public DialgoueControl()
         {
             InitializeComponent();
+            foreach (var item in MainWindow.users)
+            {
+                comboUser.Items.Add(item.Name);
+            }
+        }
+
+        private void RefreshUsers_clicked(object sender, RoutedEventArgs e)
+        {
+            comboUser.Items.Clear();
+            foreach (var item in MainWindow.users)
+            {
+                comboUser.Items.Add(item.Name);
+            }
         }
     }
 }

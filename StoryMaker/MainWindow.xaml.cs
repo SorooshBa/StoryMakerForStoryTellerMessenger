@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using ChatRoomStoryTeller;
+using Microsoft.Win32;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -19,8 +21,11 @@ namespace StoryMaker
     {
         ScrollBar sv;
         ScrollBar sh;
+        public static List<User> users = new List<User>();
+        public static MainWindow _instance;
         public MainWindow()
         {
+            _instance = this;
             InitializeComponent();
             scrl.ApplyTemplate();
             sv = scrl.Template.FindName("PART_VerticalScrollBar", scrl) as ScrollBar;
@@ -190,7 +195,47 @@ namespace StoryMaker
 
             return arrowLine;
         }
-        
+
+        private void ChooseImage_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Filter = "PNG file|*.png|JPEG file|*.jpg";
+            if (op.ShowDialog() == true)
+            {
+                System.IO.File.Copy(op.FileName, Environment.CurrentDirectory+"/img/" + System.IO.Path.GetFileName(op.FileName),true);
+                imgAddr.Text = "/img/"+System.IO.Path.GetFileName(op.FileName);
+            }
+        }
+
+        private void AddUser_clicked(object sender, RoutedEventArgs e)
+        {
+            users.Add(new User() { id = new Random().Next(1, Int32.MaxValue), Image = imgAddr.Text, Name = txtName.Text });
+            loadUser();
+        }
+        public void loadUser()
+        {
+            stckUser.Children.Clear();
+            foreach (var item in users)
+            {
+                stckUser.Children.Add(new UserinList()
+                {
+                    Margin = new Thickness(10),
+                    Width = 370,
+                    Height = 80,
+                    Username = item.Name,
+                    ProflePic = new BitmapImage(new Uri(Environment.CurrentDirectory + "/" + item.Image, UriKind.Relative)),
+                    id = item.id              
+                });
+                ((UserinList)stckUser.Children[stckUser.Children.Count - 1]).btnDel.Click += BtnDelUser_Click;
+                ((UserinList)stckUser.Children[stckUser.Children.Count - 1]).btnDel.Tag = ((UserinList)stckUser.Children[stckUser.Children.Count - 1]).id;
+            }
+        }
+
+        private void BtnDelUser_Click(object sender, RoutedEventArgs e)
+        {
+            users.Remove(users.Where(x => x.id == (int)(((Button)sender).Tag)).First());
+            loadUser();
+        }
     }
 
 }
