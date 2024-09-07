@@ -42,6 +42,9 @@ namespace StoryMaker
             dc.RectQ2.MouseDown += RectQ_MouseDown;
             dc.RectQ3.MouseDown += RectQ_MouseDown;
             dc.RectAns.MouseDown += RectAns_MouseDown;
+            dc.btnDel.Click += DC_Delete_Click;
+            dc.checkStartPoint.Checked += CheckStartPoint_Checked;
+            dc.checkStartPoint.Unchecked += CheckStartPoint_Unchecked;
             dc.Padding = new Thickness(sh.Value + p.X, sv.Value + p.Y, 0, 0);
             dc.VerticalAlignment = VerticalAlignment.Top;
             dc.HorizontalAlignment = HorizontalAlignment.Left;
@@ -50,6 +53,46 @@ namespace StoryMaker
         }
 
 
+        private void CheckStartPoint_Checked(object sender, RoutedEventArgs e)
+        {
+            DialgoueControl dc = (DialgoueControl)((CheckBox)sender).Tag;
+            if (dc.comboUser.SelectedItem != null && dialgoues.Where(x=>x!=dc&&x.comboUser.SelectedItem==dc.comboUser.SelectedItem&&x.checkStartPoint.IsChecked==true).Count()==0)
+            {
+                users.Where(x=>x.Name==dc.comboUser.SelectedItem).First().LatestDialogue=dc;
+            }
+            else
+            {
+                MessageBox.Show($"\"{dc.comboUser.SelectedItem}\" already has a starting point");
+                ((CheckBox)sender).IsChecked = false;
+            }
+        }
+        private void CheckStartPoint_Unchecked(object sender, RoutedEventArgs e)
+        {
+            DialgoueControl dc = (DialgoueControl)((CheckBox)sender).Tag;
+            try
+            {
+                users.Where(x => x.Name == dc.comboUser.SelectedItem).First().LatestDialogue = null;
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void DC_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            DialgoueControl dc = (DialgoueControl)(((Button)sender).Tag);
+            if(dialgoues.Where(x=>x.q1Answer==dc).Count()+ dialgoues.Where(x => x.q2Answer == dc).Count()+ dialgoues.Where(x => x.q3Answer == dc).Count()==0 && dc.q1Answer==null&&dc.q2Answer==null&&dc.q3Answer==null)
+            {
+                CheckStartPoint_Unchecked(dc.checkStartPoint, null);
+                dialgoues.Remove(dc);
+                gridMain.Children.Remove(dc);
+            }
+            else
+            {
+                MessageBox.Show("Can't remove this item\nThere is connection(s) to/from it.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
 
         DialgoueControl DcQ;
         Rectangle DcQrect;

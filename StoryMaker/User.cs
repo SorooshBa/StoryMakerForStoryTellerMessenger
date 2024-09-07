@@ -1,4 +1,5 @@
 ﻿using ChatRoomStoryTeller.Story;
+using StoryMaker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,6 @@ namespace ChatRoomStoryTeller
         public string Image { get; set; }
         public bool isNewMeesage {  get; set; }
         public List<ChatMessage> Messages { get; set; }=new List<ChatMessage>();
-        public Dialogue LatestDialogue {  get; set; }
+        public DialgoueControl LatestDialogue {  get; set; }
     }
 }

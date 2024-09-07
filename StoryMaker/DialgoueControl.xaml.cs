@@ -29,6 +29,8 @@ namespace StoryMaker
         public DialgoueControl()
         {
             InitializeComponent();
+            btnDel.Tag = this;
+            checkStartPoint.Tag = this;
             foreach (var item in MainWindow.users)
             {
                 comboUser.Items.Add(item.Name);
