@@ -1,5 +1,10 @@
 ﻿using ChatRoomStoryTeller;
+using ChatRoomStoryTeller.Story;
+using MessagePack;
+using MessagePack.Resolvers;
 using Microsoft.Win32;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +26,7 @@ namespace StoryMaker
     {
         ScrollBar sv;
         ScrollBar sh;
-        public static List<User> users = new List<User>();
+        public static List<UserInMaker> users = new List<UserInMaker>();
         public static MainWindow _instance;
         public MainWindow()
         {
@@ -252,7 +257,7 @@ namespace StoryMaker
 
         private void AddUser_clicked(object sender, RoutedEventArgs e)
         {
-            users.Add(new User() { id = new Random().Next(1, Int32.MaxValue), Image = imgAddr.Text, Name = txtName.Text });
+            users.Add(new UserInMaker() { id = new Random().Next(1, Int32.MaxValue), Image = imgAddr.Text, Name = txtName.Text });
             loadUser();
         }
         public void loadUser()
@@ -278,6 +283,51 @@ namespace StoryMaker
         {
             users.Remove(users.Where(x => x.id == (int)(((Button)sender).Tag)).First());
             loadUser();
+        }
+
+        private void ExportPath_clicked(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "*.bak|*.bak";
+            if(saveFileDialog.ShowDialog()==true)
+            {
+                List<Dialogue> tempDiag = new List<Dialogue>();
+                foreach (var item in dialgoues)
+                {
+                    tempDiag.Add(new Dialogue()
+                    {
+                        isStartPoint = (bool)item.checkStartPoint.IsChecked,
+                        Message = new ChatMessage() { Message = item.txtDiag.Text, Sender = ChatMessage.Senders.you },
+                        UserId = users.Where(x => x.Name == item.comboUser.SelectedItem).First().id,
+                    });
+                }
+                for (int i = 0; i < dialgoues.Count; i++)
+                {
+                    if (dialgoues[i].q1Answer != null)
+                    {
+                        tempDiag[i].Questions.Add(new Question() { Message = new ChatMessage() { Sender = ChatMessage.Senders.me, Message = dialgoues[i].txtQ1.Text }, Answer = tempDiag[dialgoues.IndexOf(dialgoues[i].q1Answer)] });
+                    }
+                    if (dialgoues[i].q2Answer != null)
+                    {
+                        tempDiag[i].Questions.Add(new Question() { Message = new ChatMessage() { Sender = ChatMessage.Senders.me, Message = dialgoues[i].txtQ2.Text }, Answer = tempDiag[dialgoues.IndexOf(dialgoues[i].q2Answer)] });
+                    }
+                    if (dialgoues[i].q3Answer != null)
+                    {
+                        tempDiag[i].Questions.Add(new Question() { Message = new ChatMessage() { Sender = ChatMessage.Senders.me, Message = dialgoues[i].txtQ3.Text }, Answer = tempDiag[dialgoues.IndexOf(dialgoues[i].q3Answer)] });
+                    }
+                }
+                //---------------------------
+                List<User> usersExport = new List<User>();
+                foreach (var item in users)
+                {
+                    usersExport.Add(new User() { id = item.id, Image = item.Image, Name = item.Name
+                    ,
+                        LatestDialogue = tempDiag[dialgoues.IndexOf(dialgoues.Where(x=>x.comboUser.SelectedItem==users.Where(y=>y.Name==item.Name).First().Name).First())]
+                    });
+                }
+                var bytes = MessagePackSerializer.Serialize(new BackUp() { Users=usersExport,Dialogue=tempDiag},ContractlessStandardResolver.Options);
+                File.WriteAllBytes(saveFileDialog.FileName, bytes);
+            }
         }
     }
 

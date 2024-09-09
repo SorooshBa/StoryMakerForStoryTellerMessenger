@@ -32,5 +32,13 @@
 
             </Grid>
         </TabItem>
+        <TabItem Header="Export">
+            <Grid Background="#FF595959">
+                <Label Content="Location:" Foreground="White" Margin="38,21,1068,607"></Label>
+                <TextBox HorizontalAlignment="Left" Margin="100,26,0,0" TextWrapping="Wrap" Text="" IsEnabled="False" VerticalAlignment="Top" Width="469"/>
+                <Button Click="ExportPath_clicked" Content="..." HorizontalAlignment="Left" Margin="581,26,0,0" VerticalAlignment="Top" Width="61"/>
+                <Button Content="Export" HorizontalAlignment="Left" Margin="581,63,0,0" VerticalAlignment="Top" Width="61"/>
+            </Grid>
+        </TabItem>
     </TabControl>
 </Window>

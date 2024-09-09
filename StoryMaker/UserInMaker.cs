@@ -1,5 +1,4 @@
-﻿using ChatRoomStoryTeller.Story;
-using StoryMaker;
+﻿using StoryMaker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace ChatRoomStoryTeller
 {
-    public class User
+    public class UserInMaker
     {
         public int id {  get; set; }
         public string Name { get; set; }

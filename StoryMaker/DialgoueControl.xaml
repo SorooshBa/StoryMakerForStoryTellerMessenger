@@ -15,15 +15,15 @@
                     <GradientStop Color="#FF363636" Offset="0.014"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            <TextBox HorizontalAlignment="Center" Margin="0,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420" Height="90"/>
+            <TextBox x:Name="txtDiag" HorizontalAlignment="Center" Margin="0,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420" Height="90"/>
             <Label Content="Answer:" HorizontalAlignment="Left" Margin="10,99,0,0" VerticalAlignment="Top" Width="220" Foreground="White"/>
             <Label Content="Qestion:" HorizontalAlignment="Left" Margin="10,242,0,0" VerticalAlignment="Top" Width="266" Foreground="White"/>
-            <TextBox HorizontalAlignment="Left" Margin="10,273,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="381" Height="38"/>
+            <TextBox x:Name="txtQ1" HorizontalAlignment="Left" Margin="10,273,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="381" Height="38"/>
 
             <Label Content="Qestion:" HorizontalAlignment="Left" Margin="10,326,0,0" VerticalAlignment="Top" Width="266" Foreground="White"/>
-            <TextBox HorizontalAlignment="Left" Margin="10,357,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="381" Height="38"/>
+            <TextBox x:Name="txtQ2" HorizontalAlignment="Left" Margin="10,357,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="381" Height="38"/>
             <Label Content="Qestion:" HorizontalAlignment="Left" Margin="10,415,0,0" VerticalAlignment="Top" Width="266" Foreground="White"/>
-            <TextBox HorizontalAlignment="Left" Margin="10,446,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="381" Height="38"/>
+            <TextBox x:Name="txtQ3" HorizontalAlignment="Left" Margin="10,446,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="381" Height="38"/>
             <Rectangle x:Name="RectQ1" HorizontalAlignment="Left" Height="22" Margin="396,280,0,0" Stroke="Black" VerticalAlignment="Top" Width="23" Fill="#FF676767"/>
             <Rectangle x:Name="RectQ2" HorizontalAlignment="Left" Height="22" Margin="396,365,0,0" Stroke="Black" VerticalAlignment="Top" Width="23" Fill="#FF676767"/>
             <Rectangle x:Name="RectQ3" HorizontalAlignment="Left" Height="22" Margin="396,454,0,0" Stroke="Black" VerticalAlignment="Top" Width="23" Fill="#FF676767"/>
