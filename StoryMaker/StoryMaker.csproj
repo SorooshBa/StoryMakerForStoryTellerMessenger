@@ -9,11 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="dotbkg.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Story\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
     <PackageReference Include="MessagePack" Version="2.5.172" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="dotbkg.jpg" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:StoryMaker"
+        xmlns:local="clr-namespace:StoryMaker" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200">
     <TabControl>
@@ -18,17 +18,23 @@
         </TabItem>
         <TabItem Header="User">
             <Grid Background="#7289da">
-                <ScrollViewer Margin="32,34,627,41">
+                <ScrollViewer Margin="32,16,627,41">
                     <StackPanel x:Name="stckUser" Background="#1e2124">
 
                     </StackPanel>
                 </ScrollViewer>
-                <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="598,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="358" Height="24"/>
-                <Label Content="Name:" HorizontalAlignment="Left" Margin="598,49,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="imgAddr" IsEnabled="False" HorizontalAlignment="Left" Margin="598,167,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="313" Height="24"/>
-                <Label Content="Image" HorizontalAlignment="Left" Margin="598,128,0,0" VerticalAlignment="Top"/>
-                <Button Content="..." HorizontalAlignment="Left" Margin="916,167,0,0" VerticalAlignment="Top" Height="24" Width="40" Click="ChooseImage_Click"/>
-                <Button Click="AddUser_clicked" Content="Add" HorizontalAlignment="Left" Margin="856,239,0,0" VerticalAlignment="Top" Height="37" Width="100"/>
+                <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="598,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="560" Height="24"/>
+                <TextBox x:Name="messageTextBoxUser" HorizontalAlignment="Left" Margin="598,494,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="560" Height="24"/>
+                <Label Content="Name:" HorizontalAlignment="Left" Margin="598,16,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="imgAddr" IsEnabled="False" HorizontalAlignment="Left" Margin="597,116,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="520" Height="24"/>
+                <Label Content="Image" HorizontalAlignment="Left" Margin="597,77,0,0" VerticalAlignment="Top"/>
+                <Button Content="..." HorizontalAlignment="Left" Margin="1117,116,0,0" VerticalAlignment="Top" Height="24" Width="40" Click="ChooseImage_Click"/>
+                <Button Click="AddUser_clicked" Content="Add" HorizontalAlignment="Left" Margin="1057,578,0,0" VerticalAlignment="Top" Height="37" Width="100"/>
+                <Button  Click="AddMessage_Clicked" Content="Add Message" HorizontalAlignment="Left" Margin="1058,523,0,0" VerticalAlignment="Top" Height="37" Width="100"/>
+                <ListBox x:Name="listMessages" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="596,145,37,167"/>
+                <ComboBox x:Name="comboSender" HorizontalAlignment="Left" Margin="913,531,0,0" VerticalAlignment="Top" Width="140"/>
+                <xctk:DateTimePicker x:Name="dateTimePicker"  HorizontalAlignment="Left" Margin="598,529,0,0" VerticalAlignment="Top" Width="310"/>
+                <Button  Click="ClearMessage_Clicked" Content="Clear Messages" HorizontalAlignment="Left" Margin="596,573,0,0" VerticalAlignment="Top" Height="37" Width="100"/>
 
             </Grid>
         </TabItem>

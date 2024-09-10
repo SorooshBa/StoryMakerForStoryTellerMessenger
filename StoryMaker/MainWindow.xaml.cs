@@ -32,6 +32,10 @@ namespace StoryMaker
         {
             _instance = this;
             InitializeComponent();
+            comboSender.Items.Add("You");
+            comboSender.Items.Add("Me");
+            comboSender.SelectedIndex = 0;
+            dateTimePicker.Value = DateTime.Now;
             scrl.ApplyTemplate();
             sv = scrl.Template.FindName("PART_VerticalScrollBar", scrl) as ScrollBar;
             sh = scrl.Template.FindName("PART_HorizontalScrollBar", scrl) as ScrollBar;
@@ -257,7 +261,8 @@ namespace StoryMaker
 
         private void AddUser_clicked(object sender, RoutedEventArgs e)
         {
-            users.Add(new UserInMaker() { id = new Random().Next(1, Int32.MaxValue), Image = imgAddr.Text, Name = txtName.Text });
+            users.Add(new UserInMaker() { id = new Random().Next(1, Int32.MaxValue), Image = imgAddr.Text, Name = txtName.Text,Messages=messages });
+            ClearMessage_Clicked(null,null);
             loadUser();
         }
         public void loadUser()
@@ -320,14 +325,39 @@ namespace StoryMaker
                 List<User> usersExport = new List<User>();
                 foreach (var item in users)
                 {
-                    usersExport.Add(new User() { id = item.id, Image = item.Image, Name = item.Name
-                    ,
-                        LatestDialogue = tempDiag[dialgoues.IndexOf(dialgoues.Where(x=>x.comboUser.SelectedItem==users.Where(y=>y.Name==item.Name).First().Name).First())]
+                    usersExport.Add(new User() { id = item.id, Image = item.Image, Name = item.Name,Messages=item.Messages
+                    
                     });
+                    try
+                    {
+                        usersExport.Last().LatestDialogue = tempDiag[dialgoues.IndexOf(dialgoues.Where(x => x.comboUser.SelectedItem == users.Where(y => y.Name == item.Name).First().Name && x.checkStartPoint.IsChecked == true).First())];
+                    }
+                    catch { }
+
                 }
                 var bytes = MessagePackSerializer.Serialize(new BackUp() { Users=usersExport,Dialogue=tempDiag},ContractlessStandardResolver.Options);
                 File.WriteAllBytes(saveFileDialog.FileName, bytes);
             }
+        }
+        List<ChatMessage> messages = new List<ChatMessage>();
+        private void AddMessage_Clicked(object sender, RoutedEventArgs e)
+        {
+            messages.Add(new ChatMessage() { Sender = (comboSender.SelectedIndex == 0) ? ChatMessage.Senders.you : ChatMessage.Senders.me, DateTime = (System.DateTime)dateTimePicker.Value, Message = messageTextBoxUser.Text });
+            loadMessagesForUser();
+        }
+        void loadMessagesForUser()
+        {
+            listMessages.Items.Clear();
+            foreach (var item in messages)
+            {
+                listMessages.Items.Add("("+item.DateTime.ToShortDateString()+" "+item.DateTime.ToShortTimeString()+") " + ((item.Sender == ChatMessage.Senders.you) ? "You" : "me") + ":" + item.Message);
+            }
+        }
+
+        private void ClearMessage_Clicked(object sender, RoutedEventArgs e)
+        {
+            messages = new List<ChatMessage>();
+            loadMessagesForUser();
         }
     }
 
